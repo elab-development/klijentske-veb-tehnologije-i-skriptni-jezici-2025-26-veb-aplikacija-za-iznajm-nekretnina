@@ -3,8 +3,9 @@ export interface INekretnina {
   naziv: string;
   cena: number;
   grad: string;
+  sobe: number;
+  tip: 'Stan' | 'Kuća'; // Dodajemo tip nekretnine
 }
-
 
 export class NekretninaServis {
   private nekretnine: INekretnina[];
@@ -13,13 +14,7 @@ export class NekretninaServis {
     this.nekretnine = nekretnine;
   }
 
-  
   dohvatiSve(): INekretnina[] {
     return this.nekretnine;
-  }
-
-  
-  filtrirajPoGradu(grad: string): INekretnina[] {
-    return this.nekretnine.filter(n => n.grad.toLowerCase() === grad.toLowerCase());
   }
 }

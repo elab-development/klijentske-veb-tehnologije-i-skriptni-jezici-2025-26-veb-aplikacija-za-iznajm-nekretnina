@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { INekretnina } from '../models/Nekretnina';
 import './Properties.css';
+import { useNavigate } from 'react-router-dom';
 
 const Properties = () => {
+  const navigate = useNavigate();
+  
+  // Ažurirana baza podataka sa nizom slika
   const [podaci] = useState<INekretnina[]>([
-    { id: 1, naziv: 'Dvosoban stan', cena: 400, grad: 'Beograd', sobe: 2, tip: 'Stan', slika: 'https://images.unsplash.com/photo-1628592102751-ba83b0314276?q=80&w=1097&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-    { id: 2, naziv: 'Garsonjera', cena: 250, grad: 'Novi Sad', sobe: 1, tip: 'Stan', slika: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&auto=format&fit=crop&w=500' },
-    { id: 3, naziv: 'Kuća sa dvorištem', cena: 800, grad: 'Niš', sobe: 4, tip: 'Kuća', slika: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&auto=format&fit=crop&w=500' },
-    { id: 4, naziv: 'Luksuzan stan', cena: 600, grad: 'Beograd', sobe: 3, tip: 'Stan', slika: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&auto=format&fit=crop&w=500' },
-    { id: 5, naziv: 'Trosoban stan', cena: 500, grad: 'Novi Sad', sobe: 3, tip: 'Stan', slika: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&auto=format&fit=crop&w=500' },
-    { id: 6, naziv: 'Vikendica', cena: 300, grad: 'Niš', sobe: 2, tip: 'Kuća', slika: 'https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&auto=format&fit=crop&w=500' }
+    { id: 1, naziv: 'Dvosoban stan', cena: 400, grad: 'Beograd', sobe: 2, tip: 'Stan', slike: ['https://images.unsplash.com/photo-1628592102751-ba83b0314276?q=80&w=500&auto=format&fit=crop', 'https://images.unsplash.com/photo-1502672260266-1c1de2d96674?q=80&w=500&auto=format&fit=crop'] },
+    { id: 2, naziv: 'Garsonjera', cena: 250, grad: 'Novi Sad', sobe: 1, tip: 'Stan', slike: ['https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=500&auto=format&fit=crop', 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=500&auto=format&fit=crop'] },
+    { id: 3, naziv: 'Kuća sa dvorištem', cena: 800, grad: 'Niš', sobe: 4, tip: 'Kuća', slike: ['https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=500&auto=format&fit=crop', 'https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&w=500&auto=format&fit=crop'] },
+    { id: 4, naziv: 'Luksuzan stan', cena: 600, grad: 'Beograd', sobe: 3, tip: 'Stan', slike: ['https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=500&auto=format&fit=crop', 'https://images.unsplash.com/photo-1502672260266-1c1de2d96674?q=80&w=500&auto=format&fit=crop'] },
+    { id: 5, naziv: 'Trosoban stan', cena: 500, grad: 'Novi Sad', sobe: 3, tip: 'Stan', slike: ['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=500&auto=format&fit=crop', 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=500&auto=format&fit=crop'] },
+    { id: 6, naziv: 'Vikendica', cena: 300, grad: 'Niš', sobe: 2, tip: 'Kuća', slike: ['https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&w=500&auto=format&fit=crop', 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=500&auto=format&fit=crop'] }
   ]);
 
   const [izabraniGradovi, setIzabraniGradovi] = useState<string[]>([]);
@@ -73,7 +77,6 @@ const Properties = () => {
         </div>
       </aside>
 
-      {/* Glavni deo - Kartice */}
       <main className="main-content">
         {filtriranaLista.length === 0 ? (
           <p className="no-results">Nema rezultata za izabrane filtere.</p>
@@ -81,10 +84,21 @@ const Properties = () => {
           <>
             <div className="properties-grid">
               {trenutneNekretnine.map(n => (
-                <div key={n.id} className="property-card">
+                <div 
+                  key={n.id} 
+                  className="property-card"
+                  onClick={() => navigate(`/nekretnina/${n.id}`)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <div className="card-image-container">
-                    <img src={n.slika} alt={n.naziv} className="card-image" />
-                    <button className="like-button" onClick={() => toggleLajk(n.id)}>
+                    <img src={n.slike[0]} alt={n.naziv} className="card-image" />
+                    <button 
+                      className="like-button" 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleLajk(n.id);
+                      }}
+                    >
                       {omiljene.includes(n.id) ? '❤️' : '🤍'}
                     </button>
                   </div>
@@ -97,7 +111,6 @@ const Properties = () => {
               ))}
             </div>
 
-            {/* Paginacija */}
             <div className="pagination">
               {Array.from({ length: ukupanBrojStranica }, (_, i) => i + 1).map(broj => (
                 <button 

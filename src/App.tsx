@@ -7,7 +7,7 @@ import Register from './pages/Register';
 import Properties from './pages/Properties';
 import Profile from './pages/Profile';
 import Contact from './pages/Contact';
-
+import PropertyDetails from './pages/PropertyDetails';
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
           <Route path="/registracija" element={<Register />} />
           <Route path="/profil" element={<Profile />} />
           <Route path="/kontakt" element={<Contact />} />
+          <Route path="/nekretnina/:id" element={<PropertyDetails />} />
         </Routes>
       </div>
     </Router>

@@ -1,0 +1,38 @@
+.contact-page {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=2000');
+  background-size: cover;
+}
+
+.contact-box {
+  background: white;
+  padding: 40px;
+  border-radius: 30px;
+  width: 400px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form input, .contact-form textarea {
+  margin: 10px 0;
+  padding: 12px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.submit-button {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #82c385;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}

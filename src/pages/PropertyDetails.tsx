@@ -66,7 +66,7 @@ const PropertyDetails = () => {
           </div>
 
           <button className="contact-owner-btn" onClick={() => navigate('/kontakt')}>
-            Kontaktiraj vlasnika
+            Zakaži razgledanje
           </button>
         </div>
       </div>

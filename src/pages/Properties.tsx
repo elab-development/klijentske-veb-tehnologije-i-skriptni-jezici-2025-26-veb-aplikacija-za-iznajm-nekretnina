@@ -1,22 +1,41 @@
 import React, { useState } from 'react';
 import { INekretnina } from '../models/Nekretnina';
 import './Properties.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const Properties = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams(); 
   
-  // Ažurirana baza podataka sa nizom slika
+  
+  const gradIzUrl = searchParams.get('grad');
+
+  
+  const formatirajGrad = (naziv: string) => {
+    const malo = naziv.toLowerCase();
+    if (malo === 'novi sad') return 'Novi Sad';
+    if (malo === 'beograd') return 'Beograd';
+    if (malo === 'nis' || malo === 'niš') return 'Niš';
+    return naziv; 
+  };
+
   const [podaci] = useState<INekretnina[]>([
-    { id: 1, naziv: 'Dvosoban stan', cena: 400, grad: 'Beograd', sobe: 2, tip: 'Stan', slike: ['https://images.unsplash.com/photo-1628592102751-ba83b0314276?q=80&w=500&auto=format&fit=crop', 'https://images.unsplash.com/photo-1502672260266-1c1de2d96674?q=80&w=500&auto=format&fit=crop'] },
-    { id: 2, naziv: 'Garsonjera', cena: 250, grad: 'Novi Sad', sobe: 1, tip: 'Stan', slike: ['https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=500&auto=format&fit=crop', 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=500&auto=format&fit=crop'] },
-    { id: 3, naziv: 'Kuća sa dvorištem', cena: 800, grad: 'Niš', sobe: 4, tip: 'Kuća', slike: ['https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=500&auto=format&fit=crop', 'https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&w=500&auto=format&fit=crop'] },
-    { id: 4, naziv: 'Luksuzan stan', cena: 600, grad: 'Beograd', sobe: 3, tip: 'Stan', slike: ['https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=500&auto=format&fit=crop', 'https://images.unsplash.com/photo-1502672260266-1c1de2d96674?q=80&w=500&auto=format&fit=crop'] },
-    { id: 5, naziv: 'Trosoban stan', cena: 500, grad: 'Novi Sad', sobe: 3, tip: 'Stan', slike: ['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=500&auto=format&fit=crop', 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=500&auto=format&fit=crop'] },
-    { id: 6, naziv: 'Vikendica', cena: 300, grad: 'Niš', sobe: 2, tip: 'Kuća', slike: ['https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&w=500&auto=format&fit=crop', 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=500&auto=format&fit=crop'] }
+    { id: 1, naziv: 'Dvosoban stan', cena: 400, grad: 'Beograd', sobe: 2, tip: 'Stan', slike: ['https://images.unsplash.com/photo-1628592102751-ba83b0314276?q=80&w=500&auto=format&fit=crop'] },
+    { id: 2, naziv: 'Garsonjera', cena: 250, grad: 'Novi Sad', sobe: 1, tip: 'Stan', slike: ['https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=500&auto=format&fit=crop'] },
+    { id: 3, naziv: 'Kuća sa dvorištem', cena: 800, grad: 'Niš', sobe: 4, tip: 'Kuća', slike: ['https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=500&auto=format&fit=crop'] },
+    { id: 4, naziv: 'Luksuzan stan', cena: 600, grad: 'Beograd', sobe: 3, tip: 'Stan', slike: ['https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=500&auto=format&fit=crop'] },
+    { id: 5, naziv: 'Trosoban stan', cena: 500, grad: 'Novi Sad', sobe: 3, tip: 'Stan', slike: ['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=500&auto=format&fit=crop'] },
+    { id: 6, naziv: 'Vikendica', cena: 300, grad: 'Niš', sobe: 2, tip: 'Kuća', slike: ['https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&w=500&auto=format&fit=crop'] }
   ]);
 
-  const [izabraniGradovi, setIzabraniGradovi] = useState<string[]>([]);
+  
+  const [izabraniGradovi, setIzabraniGradovi] = useState<string[]>(() => {
+    if (gradIzUrl) {
+      return [formatirajGrad(gradIzUrl)];
+    }
+    return [];
+  });
+  
   const [izabraniTipovi, setIzabraniTipovi] = useState<string[]>([]);
   const [meseci, setMeseci] = useState<number>(1);
   const [stranica, setStranica] = useState(1);
@@ -51,10 +70,14 @@ const Properties = () => {
           <h3>Gradovi</h3>
           {['Beograd', 'Novi Sad', 'Niš'].map(g => (
             <label key={g} className="checkbox-label">
-              <input type="checkbox" onChange={() => {
-                setIzabraniGradovi(prev => prev.includes(g) ? prev.filter(x => x !== g) : [...prev, g]);
-                setStranica(1);
-              }} /> {g}
+              <input 
+                type="checkbox" 
+                checked={izabraniGradovi.includes(g)} 
+                onChange={() => {
+                  setIzabraniGradovi(prev => prev.includes(g) ? prev.filter(x => x !== g) : [...prev, g]);
+                  setStranica(1);
+                }} 
+              /> {g}
             </label>
           ))}
         </div>
@@ -63,10 +86,14 @@ const Properties = () => {
           <h3>Tip nekretnine</h3>
           {['Stan', 'Kuća'].map(t => (
             <label key={t} className="checkbox-label">
-              <input type="checkbox" onChange={() => {
-                setIzabraniTipovi(prev => prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t]);
-                setStranica(1);
-              }} /> {t}
+              <input 
+                type="checkbox" 
+                checked={izabraniTipovi.includes(t)}
+                onChange={() => {
+                  setIzabraniTipovi(prev => prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t]);
+                  setStranica(1);
+                }} 
+              /> {t}
             </label>
           ))}
         </div>

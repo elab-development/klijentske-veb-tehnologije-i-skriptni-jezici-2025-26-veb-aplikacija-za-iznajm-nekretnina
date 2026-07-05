@@ -14,7 +14,7 @@ const Navbar = () => {
         <Link to="/">Početna</Link>
         <Link to="/nekretnine">Nekretnine</Link>
         <Link to="/kontakt">Kontakt</Link>
-        <Link to={isLoggedIn ? "/profil" : "/login"}>Moj profil</Link>
+        <Link to={isLoggedIn ? "/profil" : "/prijava"}>Moj profil</Link>
       </div>
     </nav>
   );

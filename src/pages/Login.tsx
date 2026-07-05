@@ -5,14 +5,32 @@ import './Auth.css';
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
+  const [lozinka, setLozinka] = useState('');
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Proveravamo da li imamo registrovanog korisnika u memoriji
+    const registeredUserStr = localStorage.getItem('registeredUser');
+    
+    if (registeredUserStr) {
+      const registeredUser = JSON.parse(registeredUserStr);
+      
+      // Provera kredencijala
+      if (registeredUser.email === email && registeredUser.lozinka === lozinka) {
+        localStorage.setItem('currentUser', JSON.stringify(registeredUser));
+        navigate('/profil');
+        return;
+      } else {
+        alert('Netačan email ili lozinka!');
+        return;
+      }
+    }
+
     localStorage.setItem('currentUser', JSON.stringify({
-      ime: 'Petar Petrović',
+      ime: 'Korisnik Sajta',
       email: email,
-      telefon: '060/123-4567'
+      telefon: '060/000-000'
     }));
 
     navigate('/profil');
@@ -31,11 +49,17 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             required 
           />
-          <input type="password" placeholder="Lozinka" className="auth-input" required />
+          <input 
+            type="password" 
+            placeholder="Lozinka" 
+            className="auth-input" 
+            value={lozinka}
+            onChange={(e) => setLozinka(e.target.value)}
+            required 
+          />
           <button type="submit" className="auth-button">Prijavi se</button>
         </form>
         
-        {/* Novi deo koji si tražio! */}
         <p style={{ marginTop: '20px', fontSize: '14px' }}>
           Nemate nalog? <Link to="/registracija" style={{ color: '#82c385', fontWeight: 'bold', textDecoration: 'none' }}>Napravite nalog</Link>
         </p>

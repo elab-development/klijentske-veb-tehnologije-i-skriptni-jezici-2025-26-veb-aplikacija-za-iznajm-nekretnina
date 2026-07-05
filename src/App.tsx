@@ -8,6 +8,7 @@ import Properties from './pages/Properties';
 import Profile from './pages/Profile';
 import Contact from './pages/Contact';
 
+
 function App() {
   return (
     <Router>

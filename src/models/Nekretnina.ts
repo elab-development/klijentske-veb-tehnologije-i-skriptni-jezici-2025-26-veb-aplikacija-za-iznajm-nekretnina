@@ -5,6 +5,7 @@ export interface INekretnina {
   grad: string;
   sobe: number;
   tip: 'Stan' | 'Kuća'; // Dodajemo tip nekretnine
+  slika: string;
 }
 
 export class NekretninaServis {

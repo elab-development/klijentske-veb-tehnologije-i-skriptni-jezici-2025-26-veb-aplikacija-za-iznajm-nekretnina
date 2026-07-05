@@ -1,46 +1,52 @@
-# Getting Started with Create React App
+# 🏠 Veb aplikacija za iznajmljivanje nekretnina
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Ovaj projekat predstavlja seminarski rad izrade moderne Single Page Aplikacije (SPA) za pretragu i iznajmljivanje nekretnina. Aplikacija je razvijena korišćenjem **React** biblioteke u kombinaciji sa **TypeScript**-om, uz implementaciju klijentskog rutiranja i upravljanja stanjem.
 
-## Available Scripts
+## 🛠 Tehnologije
 
-In the project directory, you can run:
+* **React (v18)** - Biblioteka za izgradnju korisničkog interfejsa.
+* **TypeScript** - Statička tipizacija za sigurniji i robusniji kod.
+* **React Router DOM** - Implementacija navigacije i zaštićenih ruta.
+* **CSS3** - Responzivni dizajn korišćenjem Flexbox-a i Grid-a.
+* **LocalStorage** - Simulacija baze podataka i čuvanje sesije korisnika (Autentifikacija).
 
-### `npm start`
+## ✨ Ključne funkcionalnosti
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. **Sistem autentifikacije:**
+   * Registracija novih korisnika i čuvanje kredencijala.
+   * Prijava (Login) sa proverom podataka i uspostavljanje sesije korisnika.
+   * Zaštićena ruta za korisnički profil (ako korisnik nije prijavljen, automatski se preusmerava na Login).
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+2. **Pretraga i filtriranje nekretnina:**
+   * Globalna pretraga po gradovima sa početne stranice.
+   * Dinamičko filtriranje oglasa po gradu i tipu nekretnine (Stan/Kuća).
+   * Kalkulator cene zakupa (množenje osnovne cene sa brojem meseci).
+   * Paginacija rezultata pretrage (3 oglasa po stranici).
 
-### `npm test`
+3. **Detalji i interakcija:**
+   * Mogućnost dodavanja nekretnina u "Sačuvane oglase" (Like funkcionalnost).
+   * Stranica sa detaljima pojedinačne nekretnine koja se dobija dinamičkim rutiranjem (`/nekretnina/:id`).
+   * Dinamička galerija slika za svaku nekretninu.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. **Korisnički profil:**
+   * Prikaz i mogućnost izmene ličnih podataka korisnika.
+   * Dinamički prikaz isključivo onih nekretnina koje je korisnik sačuvao.
+   * Opcija za bezbednu odjavu iz sistema (Logout).
 
-### `npm run build`
+## 🚀 Pokretanje projekta
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Za pokretanje ovog projekta na lokalnoj mašini, potrebno je da imate instaliran [Node.js](https://nodejs.org/).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Klonirajte repozitorijum:
+   ```bash
+   git clone https://github.com/elab-development/klijentske-veb-tehnologije-i-skriptni-jezici-2025-26-veb-aplikacija-za-iznajm-nekretnina.git
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Instalirajte zavisnosti:
+Bash
+npm install
 
-### `npm run eject`
+3. Pokrenite aplikaciju:
+Bash
+npm start
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Aplikacija će se pokrenuti na http://localhost:3000.

@@ -18,6 +18,21 @@ const Properties = () => {
     return gradMatch && tipMatch;
   });
 
+  const [omiljene, setOmiljene] = useState<number[]>(() => {
+  const saved = localStorage.getItem('omiljeneNekretnine');
+  return saved ? JSON.parse(saved) : [];
+});
+
+
+const toggleLajk = (id: number) => {
+  const noviNiz = omiljene.includes(id) 
+    ? omiljene.filter(i => i !== id) 
+    : [...omiljene, id];
+  
+  setOmiljene(noviNiz);
+  localStorage.setItem('omiljeneNekretnine', JSON.stringify(noviNiz));
+};
+
   return (
     <div style={{ display: 'flex' }}>
       <aside style={{ width: '250px', padding: '10px' }}>
@@ -43,11 +58,16 @@ const Properties = () => {
       <main style={{ flex: 1 }}>
         <h1>Spisak nekretnina</h1>
         {lista.length === 0 ? <p>Nema rezultata.</p> : lista.map(n => (
-          <div key={n.id} style={{ border: '1px solid #ddd', margin: '10px', padding: '10px' }}>
-            <h3>{n.naziv}</h3>
-            <p>{n.grad} | {n.sobe} sobe | Tip: {n.tip} | Cena: {n.cena}€</p>
-          </div>
-        ))}
+      <div key={n.id} style={{ border: '1px solid #ddd', margin: '10px', padding: '10px' }}>
+        <h3>{n.naziv}</h3>
+        <p>{n.grad} | {n.sobe} sobe | Tip: {n.tip} | Cena: {n.cena}€</p>
+        
+        {/* Ovde dodajemo dugme za lajkovanje */}
+        <button onClick={() => toggleLajk(n.id)}>
+          {omiljene.includes(n.id) ? '❤️ Ukloni iz omiljenih' : '🤍 Dodaj u omiljene'}
+        </button>
+      </div>
+    ))}
       </main>
     </div>
   );

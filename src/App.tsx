@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Properties from './pages/Properties';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/nekretnine" element={<Properties />} />
           <Route path="/prijava" element={<Login />} />
           <Route path="/registracija" element={<Register />} />
+          <Route path="/profil" element={<Profile />} />
         </Routes>
       </div>
     </Router>
